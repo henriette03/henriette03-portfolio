@@ -1,25 +1,31 @@
 import streamlit as st
+import os
 
 # Set the page title
 st.set_page_config(page_title="Student Portfolio", page_icon="🎓", layout="wide")
 
-# Side navigation 
+# Side navigation
 st.sidebar.title("📌 Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Projects", "Skills", "Customize Profile", "Contact", "Testimonials"])
 
-# Home Section 
+# Home Section
 if page == "Home":
     st.title("🎓 Student Portfolio")
     
     # Profile picture upload
     uploaded_image = st.file_uploader("Upload profile picture", type=['png', 'jpg', 'jpeg'])
+    default_image = "person.jpg"
+    
     if uploaded_image is not None:
         st.image(uploaded_image, caption='Profile Pic', width=150)
-    else: 
-        st.image("person.jpg.", caption='Default Profile Picture', width=150)
+    else:
+        if os.path.exists(default_image):
+            st.image(default_image, caption='Default Profile Picture', width=150)
+        else:
+            st.warning("Default profile picture not found. Please upload an image.")
     
     # User Editable Student Details
-    name = st.text_input("Your Name", "Karigirwa henriette")
+    name = st.text_input("Your Name", "Karigirwa Henriette")
     location = st.text_input("Location", "Musanze, Rwanda")
     field_of_study = st.text_input("Field of Study", "Software Engineering")
     university = st.text_input("University", "INES-Ruhengeri")
@@ -27,7 +33,7 @@ if page == "Home":
     st.write(f"😎 {name}")
     st.write(f"📍 {location}")
     st.write(f"📚 {field_of_study}")
-    st.write(f"🏫 {university}")
+    st.write(f"🏢 {university}")
     
     # CV Upload & Download
     uploaded_cv = st.file_uploader("Upload your CV (PDF)", type=['pdf'])
@@ -37,39 +43,38 @@ if page == "Home":
         st.success("CV uploaded successfully!")
     
     with open("Karigirwa. CV.pdf", "rb") as file:
-        st.download_button(label="📄 Download My Resume", data=file, file_name="My_Resume.pdf")
+        st.download_button(label="📝 Download My Resume", data=file, file_name="My_Resume.pdf")
     
     # "Deep Me" Button for More Information
     if st.button("🔍 Deep Me"):
         st.subheader("Personal Information")
-        st.write("- *Full Name:* Karigirwa henriette")
-        st.write("- *Date of Birth:* 21/06/2001")
-        st.write("- *Nationality:* Rwandan")
-        st.write("- *Gender:* female")
-        st.write("- *Marital Status:* Single")
-        st.write("- *Email:* henriettek.16@gmail.com")
-        st.write("- *Phone:* 0786910365")
-        st.write("- *Residence:* Kigali, Gasabo, Kimihurura")
+        st.write("- Full Name: Karigirwa Henriette")
+        st.write("- Date of Birth: 21/06/2001")
+        st.write("- Nationality: Rwandan")
+        st.write("- Gender: Female")
+        st.write("- Marital Status: Single")
+        st.write("- Email: henriettek.16@gmail.com")
+        st.write("- Phone: 0786910365")
+        st.write("- Residence: Kigali, Gasabo, Kimihurura")
 
 # Projects Page
 elif page == "Projects":
     st.title("💻 Projects")
-    
-    with st.expander("📊 AI-Based Loan Evaluation System (Final Year Project)"):
-        st.write("*Project Type:* Individual Dissertation")
-        st.write("*Description:* Developed an AI-powered system to evaluate loan eligibility using OCR and data analysis.")
-        st.write("*Technologies:* Python, TensorFlow, Django, PostgreSQL")
+    with st.expander("🌊 AI-Based Loan Evaluation System (Final Year Project)"):
+        st.write("Project Type: Individual Dissertation")
+        st.write("Description: Developed an AI-powered system to evaluate loan eligibility using OCR and data analysis.")
+        st.write("Technologies: Python, TensorFlow, Django, PostgreSQL")
         st.write("[GitHub Repository](https://github.com/henriette03/loan-evaluation)")
     
     with st.expander("📡 Hospital Management System (Year 3 Project)"):
-        st.write("*Project Type:* Group Assignment")
-        st.write("*Description:* A web-based platform for managing hospital operations including patient records, doctor appointments, and ambulance services.")
-        st.write("*Technologies:* HTML, CSS, JavaScript, PHP, MariaDB")
-    
-    with st.expander("🛍 E-Commerce Platform (Year 2 Project)"):
-        st.write("*Project Type:* Individual Project")
-        st.write("*Description:* Built an e-commerce website where users can buy and sell products online.")
-        st.write("*Technologies:* React, Firebase, Node.js")
+        st.write("Project Type: Group Assignment")
+        st.write("Description: A web-based platform for managing hospital operations including patient records, doctor appointments, and ambulance services.")
+        st.write("Technologies: HTML, CSS, JavaScript, PHP, MariaDB")
+ 
+    with st.expander("🛒 E-Commerce Platform (Year 2 Project)"):
+        st.write("Project Type: Individual Project")
+        st.write("Description: Built an e-commerce website where users can buy and sell products online.")
+        st.write("Technologies: React, Firebase, Node.js")
 
 # Skills Page
 elif page == "Skills":
@@ -90,7 +95,7 @@ elif page == "Skills":
     
     st.write("### Certifications & Achievements")
     st.write("✔ Completed Google Data Analytics Certification")
-    st.write("✔Alx Software engineering programme with a secialized in Front-end")
+    st.write("✔ ALX Software Engineering Program with specialization in Front-end")
 
 # Customize Profile Page
 elif page == "Customize Profile":
@@ -120,8 +125,8 @@ elif page == "Contact":
 elif page == "Testimonials":
     st.title("🗣 Testimonials")
     st.write("What others say about me.")
-    st.write("- 'henriette is an excellent problem solver and has great coding skills!' - Dr. Theodore")
-    st.write("- 'His final year project was innovative and impactful!' -Mrs. Queen")
+    st.write("- 'Henriette is an excellent problem solver and has great coding skills!' - Dr. Theodore")
+    st.write("- 'Her final year project was innovative and impactful!' - Mrs. Queen")
     new_testimonial = st.text_area("Write a testimonial about me")
     if st.button("Submit Testimonial"):
-        st.success("Thank you for your feedback!")
+        st.success("Thank you for your feedback!")
